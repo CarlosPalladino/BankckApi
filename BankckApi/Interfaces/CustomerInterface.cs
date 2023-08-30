@@ -9,6 +9,7 @@ namespace BankckApi.Interfaces
 
         Customer GetGustomer(int id);
 
+        bool Save(Customer customer);
 
         ICollection<Account> GetAccoutByCustomer(int AccoutId);
 

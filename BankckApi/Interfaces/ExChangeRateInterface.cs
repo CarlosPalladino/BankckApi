@@ -10,6 +10,7 @@ namespace BankckApi.Interfaces
 
         bool ExchangeExists(int id);
 
+        bool Save(ExchangeRate exchangeRate);
 
         bool CreateExchangeRate(ExchangeRate exchangeRate);
 
