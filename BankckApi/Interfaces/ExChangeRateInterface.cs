@@ -8,6 +8,9 @@ namespace BankckApi.Interfaces
 
         ExchangeRate GetExchangeRate(int id);
 
+        bool ExchangeExists(int id);
+
+
         bool CreateExchangeRate(ExchangeRate exchangeRate);
 
         bool UpdateExchangeRate(ExchangeRate exchangeRate);

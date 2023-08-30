@@ -8,11 +8,12 @@ namespace BankckApi.Interfaces
         ICollection<Currency> GetCurrencies();
 
 
-        Currency GetCurrency(int currency);
+        Currency GetCurrency(int Id);
 
-        ICollection<Currency> GetCurrenciesById(int Id);
 
-        Currency CurrencyExits(int currency);
+        bool CurrencyExits(int Id);
+
+        bool Save(Currency currency);
 
         bool CreateCurrency(Currency currency);
 

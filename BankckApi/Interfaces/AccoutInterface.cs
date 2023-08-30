@@ -11,12 +11,13 @@ namespace BankckApi.Interfaces
 
         ICollection<Customer> GetAccoutByCustomer(int CustomerId);
 
-        Account AccoutExits(int Id);
+        bool AccoutExits(int Id);
         bool CreateAccout(Account account);
         bool UpdateAccout(Account account);
 
         bool DeleteAccout(Account account);
 
+        bool Save(Account account);
 
 
     }

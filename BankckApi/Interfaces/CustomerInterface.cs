@@ -14,6 +14,12 @@ namespace BankckApi.Interfaces
 
         bool CustomerExits(int id);
 
+        bool CreateCustomer(Customer customer);
+
+
+        bool UpdateCustomer(Customer customer);
+
+        bool DeleteCustomer(Customer customer);
 
 
     }
