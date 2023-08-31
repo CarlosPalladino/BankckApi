@@ -1,43 +1,62 @@
-﻿using BankckApi.Interfaces;
+﻿using BankckApi.Data;
+using BankckApi.Interfaces;
 using BankckApi.Models;
 
 namespace BankckApi.Repository
 {
     public class TransactionRepository : TransactionInterface
     {
+        private readonly DataContext _context
+        public TransactionRepository(DataContext context)
+        {
+            _context = context;
+        }
+
         public bool CreateTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+
+            _context.Add(transaction);
+            return Save(transaction);
         }
 
         public bool DeleteTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            _context.Remove(transaction);
+            return Save(transaction);
         }
 
         public Transaction GetTransaction(int Id)
         {
-            throw new NotImplementedException();
+            return _context.Transaction.Where(t => t.Id == Id).FirstOrDefault();
         }
 
         public ICollection<Account> GetTransactionByAccount(int AccountId)
         {
-            throw new NotImplementedException();
+            return _context.Account.Where(a => AccountId == a.Id).Select(a => a.Transactions).FirstOrDefault();
         }
 
         public ICollection<Transaction> GetTransactions()
         {
-            throw new NotImplementedException();
+            return _context.Transaction.ToList();
+
+        }
+
+        public bool Save(Transaction transaction)
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public bool TransactionExits(Transaction transaction)
         {
-            throw new NotImplementedException();
+
+            return _context.Transaction.Any();
         }
 
         public bool UpdateTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            _context.Transaction.Update(transaction);
+            return Save(transaction);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace BankckApi.Repository
         }
         public bool CreateCustomer(Customer customer)
         {
-            _context.SaveChanges(customer);
+            _context.Add(customer);
             return Save(customer);
         }
 

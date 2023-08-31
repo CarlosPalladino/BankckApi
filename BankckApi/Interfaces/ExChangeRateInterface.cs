@@ -16,7 +16,7 @@ namespace BankckApi.Interfaces
 
         bool UpdateExchangeRate(ExchangeRate exchangeRate);
 
-        bool DeleteExchangeRate(int id);
+        bool DeleteExchangeRate(ExchangeRate exchangeRate);
 
 
 

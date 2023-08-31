@@ -1,43 +1,65 @@
-﻿using BankckApi.Interfaces;
+﻿using BankckApi.Data;
+using BankckApi.Interfaces;
 using BankckApi.Models;
 
 namespace BankckApi.Repository
 {
     public class ExchanRateRepository : ExChangeRateInterface
     {
-        public bool CreateExchangeRate(ExchangeRate exchangeRate)
+
+        private readonly DataContext _dataContext;
+        public ExchanRateRepository(DataContext context)
         {
-            throw new NotImplementedException();
+            _dataContext = context;
+
         }
 
-        public bool DeleteExchangeRate(int id)
+        public bool CreateExchangeRate(ExchangeRate exchangeRate)
         {
-            throw new NotImplementedException();
+            _dataContext.Add(exchangeRate);
+            return Save(exchangeRate);
+        }
+
+        public bool DeleteExchangeRate(ExchangeRate exchangeRate)
+        {
+
+            _dataContext.Remove(exchangeRate);
+            return Save(exchangeRate);
+
         }
 
         public bool ExchangeExists(int id)
         {
-            throw new NotImplementedException();
+
+            return _dataContext.ExchangeRate.Any(e => e.Id == id);
+
         }
 
         public ExchangeRate GetExchangeRate(int id)
         {
-            throw new NotImplementedException();
+
+            return _dataContext.ExchangeRate.Where(e => e.Id == id).FirstOrDefault();
+
         }
 
         public ICollection<ExchangeRate> GetExchangeRates()
         {
-            throw new NotImplementedException();
+            return _dataContext.ExchangeRate.ToList();
         }
 
         public bool Save(ExchangeRate exchangeRate)
         {
-            throw new NotImplementedException();
+            var saved = _dataContext.SaveChanges();
+
+            return saved > 0 ? true : false;
         }
 
         public bool UpdateExchangeRate(ExchangeRate exchangeRate)
         {
-            throw new NotImplementedException();
+
+            _dataContext.Update(exchangeRate);
+            return Save(exchangeRate);
+
         }
     }
 }

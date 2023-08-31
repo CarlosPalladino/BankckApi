@@ -12,6 +12,8 @@ namespace BankckApi.Interfaces
 
         ICollection<Account> GetTransactionByAccount(int AccountId);
 
+        bool Save(Transaction transaction);
+
         bool TransactionExits(Transaction transaction);
 
         bool CreateTransaction(Transaction transaction);
