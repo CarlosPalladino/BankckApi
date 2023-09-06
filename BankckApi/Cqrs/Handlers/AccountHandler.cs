@@ -64,15 +64,12 @@ namespace BankckApi.Cqrs.Handlers
         }
         public async Task<List<Account>> Handle(GetAccountByCustomerCommand req, CancellationToken cancellationToken)
         {
-
-
             var customerId = req.CustomerId;
-            var accounts = _interface.GetAccounts().Where(a => a.CustomerId == customerId).ToList();
+            var accounts = await _interface.GetAccounts();
+            var filteredAccounts = accounts.Where(a => a.CustomerId == customerId).ToList();
 
-            return accounts;
-
+            return filteredAccounts;
         }
-
 
 
     }
@@ -89,7 +86,7 @@ namespace BankckApi.Cqrs.Handlers
 
 }
 
-}
+
 
 
 

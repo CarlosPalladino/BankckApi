@@ -10,7 +10,7 @@ namespace BankckApi.Interfaces
 
         Transaction GetTransaction(int Id);
 
-        ICollection<Account> GetTransactionByAccount(int AccountId);
+        ICollection<Transaction> GetTransactionByAccount(int AccountId);
 
         bool Save(Transaction transaction);
 

@@ -6,7 +6,7 @@ namespace BankckApi.Repository
 {
     public class TransactionRepository : TransactionInterface
     {
-        private readonly DataContext _context
+        private readonly DataContext _context;
         public TransactionRepository(DataContext context)
         {
             _context = context;
@@ -30,7 +30,7 @@ namespace BankckApi.Repository
             return _context.Transaction.Where(t => t.Id == Id).FirstOrDefault();
         }
 
-        public ICollection<Account> GetTransactionByAccount(int AccountId)
+        public ICollection<Transaction> GetTransactionByAccount(int AccountId)
         {
             return _context.Account.Where(a => AccountId == a.Id).Select(a => a.Transactions).FirstOrDefault();
         }

@@ -73,11 +73,15 @@ namespace BankckApi.Controllers
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var account = _interface.GetAccounts().Where(a => a.AccountNumber.Trim().ToUpper() == accountCreate.AccountNumber
-            .TrimEnd().ToUpper()).FirstOrDefault();
+
+            var accounts = await _interface.GetAccounts(); 
+
+            var account = accounts.Where(a => a.AccountNumber.Trim().ToUpper() == accountCreate.AccountNumber
+                    .TrimEnd().ToUpper()).FirstOrDefault();
+
             if (account != null)
             {
-                ModelState.AddModelError("", "account alreeady exits")
+                ModelState.AddModelError("", "account alreeady exits");
                     return StatusCode(422, ModelState);
             }
             var CreateAccount = await _interface.CreateAccout(accountCreate);

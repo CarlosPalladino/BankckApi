@@ -5,11 +5,11 @@ namespace BankckApi.Interfaces
 {
     public interface AccoutInterface
     {
-        ICollection<Account> GetAccounts();
+        Task<ICollection<Account>> GetAccounts();
 
         Task<Account> GetAccount(int Id);
 
-        ICollection<Customer> GetAccoutByCustomer(int CustomerId);
+        Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId);
 
         Task<bool> AccoutExits(int Id);
         Task<bool> CreateAccout(Account account);

@@ -1,6 +1,8 @@
 ﻿using BankckApi.Data;
 using BankckApi.Interfaces;
 using BankckApi.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace BankckApi.Repository
 {
     public class AccoutRepository : AccoutInterface
@@ -13,52 +15,51 @@ namespace BankckApi.Repository
             _context = context;
         }
 
-        public bool AccoutExits(int Id)
+        public async Task<bool> AccoutExits(int Id)
         {
-            return _context.Account.Any(a => a.Id == Id);
+            return await _context.Account.AnyAsync(a => a.Id == Id);
         }
 
-        public bool CreateAccout(Account account)
+        public async Task<bool> CreateAccout(Account account)
         {
 
             _context.Add(account);
-            return Save(account);
+            return await Save(account);
         }
-        public bool DeleteAccout(Account account)
+        public async Task<bool> DeleteAccout(Account account)
         {
             _context.Remove(account);
-            return Save(account);
+            return await Save(account);
         }
 
-        public Account GetAccount(int Id)
-        {
-            return _context.Account.Where(a => a.Id == Id).FirstOrDefault();
-        }
-
-        public ICollection<Account> GetAccounts()
-        {
-            return _context.Account.ToList();
-        }
-
-        public ICollection<Customer> GetAccoutByCustomer(int CustomerId)
-        {
-            return _context.Customer.Where(c => CustomerId == c.Id).Select(c => c.Accounts).ToList();
-        }
-
-        public bool Save(Account account)
+        public async Task<bool> Save(Account account)
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateAccout(Account account)
+        public async Task<bool> UpdateAccout(Account account)
         {
             _context.Update(account);
-            return Save(account);
+            return await Save(account);
 
         }
+        public async Task<Account> GetAccount(int Id)
+        {
+            return await _context.Account.FirstOrDefaultAsync(a => a.Id == Id);
+        }
 
+        public async Task<ICollection<Account>> GetAccounts()
+        {
+            return await _context.Account.ToListAsync();
+        }
 
-
+        public  async Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId)
+        {
+            return await _context.Customer
+                          .Where(c => CustomerId == c.Id)
+                          .SelectMany(c => c.Accounts)
+                          .ToListAsync();
+        }
     }
 }
