@@ -1,5 +1,8 @@
 using BankckApi;
+using BankckApi.Cqrs.Commands.Account;
+using BankckApi.Cqrs.Handlers;
 using BankckApi.Data;
+using BankckApi.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddTransient<AccoutInterface, AccountHandler>();
+builder.Services.AddMediatR(typeof(AccountHandler).Assembly);
 
-builder.Services.AddDbContext<DataContext>(options =>
-{
+
+builder.Services.AddDbContext<DataContext>(options => { 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 var app = builder.Build();
