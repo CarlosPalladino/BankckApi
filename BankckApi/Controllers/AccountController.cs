@@ -24,16 +24,19 @@ namespace BankckApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
 
-        public async Task<IActionResult> GetAccounts()
+        public async Task<IEnumerable> GetAccounts()
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
 
             var acccounts = _interface.GetAccounts();
-            return Ok(acccounts);
+            return _mediator.Send(acccounts);
+            //return (IActionResult)_mediator.Send(acccounts);
         }
-
+        [HttpGet("{accoutId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> GetAccout(int Id)
         {
             if (!await _interface.AccoutExits(Id))
@@ -49,6 +52,8 @@ namespace BankckApi.Controllers
 
         }
         [HttpGet("Account/{customerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
 
         public async Task<IActionResult> GetAccountByCustomer(int id)
         {
@@ -74,7 +79,7 @@ namespace BankckApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var accounts = await _interface.GetAccounts(); 
+            var accounts = await _interface.GetAccounts();
 
             var account = accounts.Where(a => a.AccountNumber.Trim().ToUpper() == accountCreate.AccountNumber
                     .TrimEnd().ToUpper()).FirstOrDefault();
@@ -82,7 +87,7 @@ namespace BankckApi.Controllers
             if (account != null)
             {
                 ModelState.AddModelError("", "account alreeady exits");
-                    return StatusCode(422, ModelState);
+                return StatusCode(422, ModelState);
             }
             var CreateAccount = await _interface.CreateAccout(accountCreate);
 
@@ -116,8 +121,8 @@ namespace BankckApi.Controllers
 
         }
         [HttpDelete]
-        [ProducesResponseType(200)];
-        [ProducesResponseType(300)];
+        [ProducesResponseType(200)]
+        [ProducesResponseType(300)]
 
         public async Task<IActionResult> DeleteAccount(int accountId)
         {
@@ -131,7 +136,7 @@ namespace BankckApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var accountToDelete =  await _interface.GetAccount(accountId);
+            var accountToDelete = await _interface.GetAccount(accountId);
 
             if (!ModelState.IsValid)
             {
@@ -145,40 +150,6 @@ namespace BankckApi.Controllers
 
             return Ok("Delete succes");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
