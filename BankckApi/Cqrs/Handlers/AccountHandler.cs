@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace BankckApi.Cqrs.Handlers
 {
-    public class AccountHandler : IRequestHandler<AccountCommand, bool>
+    public class AccountHandler : AccountCommand
     {
 
         private readonly AccoutInterface _interface;

@@ -115,6 +115,10 @@ namespace BankckApi.Controllers
             return Ok("Update Success");
 
         }
+        [HttpDelete]
+        [ProducesResponseType(200)];
+        [ProducesResponseType(300)];
+
         public async Task<IActionResult> DeleteAccount(int accountId)
         {
             if (!await _interface.AccoutExits(accountId))
