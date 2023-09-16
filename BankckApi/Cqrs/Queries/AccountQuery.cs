@@ -1,19 +1,15 @@
 ﻿using BankckApi.Models;
 using MediatR;
+using BankckApi.Dtos;
 
 namespace BankckApi.Cqrs.Queries
 {
-    public class GetById
-    {
+    public record GetAll : IRequest<IEnumerable<AccountDto>>;
 
+    public record GetById(int Id) : IRequest<AccountDto>;
 
+    public record GetAccountBycyustomer(int Id) : IRequest<List<Customer>>;
 
-    }
-
-    public class GetAccountByCustomerCommand : IRequest<List<Customer>>
-    {
-        public int CustomerId { get; set; }
-    }
 
 
 }
