@@ -61,5 +61,7 @@ namespace BankckApi.Repository
                           .SelectMany(c => c.Accounts)
                           .ToListAsync();
         }
+
+   
     }
 }

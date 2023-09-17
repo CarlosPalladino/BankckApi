@@ -1,4 +1,5 @@
 ﻿using BankckApi.Data;
+using BankckApi.Dtos;
 using BankckApi.Models;
 
 namespace BankckApi.Interfaces
@@ -18,7 +19,5 @@ namespace BankckApi.Interfaces
         Task<bool> DeleteAccout(Account account);
 
         Task<bool> Save(Account account);
-
-
     }
 }

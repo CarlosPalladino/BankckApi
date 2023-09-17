@@ -25,7 +25,7 @@ namespace BankckApi.Cqrs.Handlers.Account
 
         public async Task<AccountDto> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-            var account = new AccountDto
+            var account = new Accout
             {
                 Id = request.Id,
                 AccountNumber = request.AccountNumber,
@@ -33,7 +33,8 @@ namespace BankckApi.Cqrs.Handlers.Account
                 IsLocked = false
 
             };
-            return await _interface.CreateAccout(account);
+            await _interface.CreateAccout(account);
+            return account;
         }
 
         public Task<bool> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
@@ -43,13 +44,16 @@ namespace BankckApi.Cqrs.Handlers.Account
 
         public async Task<AccountDto> Handle(UpdateAccount request, CancellationToken cancellationToken)
         {
-            var account = new Account
+            var account = new AccountDto
             {
                 Id = request.Id,
-                AccoutNummber = request.AccoutNumber,
+                AccountNumber = request.AccoutNumber,
                 Balance = request.balance,
             };
-            return await _interface.UpdateAccout(account);
+             await _interface.UpdateAccout(account);
+            return account;
+
+
         }
 
 
