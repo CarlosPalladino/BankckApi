@@ -13,7 +13,7 @@ namespace BankckApi.Interfaces
         Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId);
 
         Task<bool> AccoutExits(int Id);
-        Task<bool> CreateAccout(Account account);
+        Task<bool> CreateAccout(Account  account);
         Task<bool> UpdateAccout(Account account);
 
         Task<bool> DeleteAccout(Account account);

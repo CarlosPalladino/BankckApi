@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using BankckApi.Interfaces;
 using BankckApi.Models;
-using BankckApi.Cqrs.Commands.Account;
+using BankckApi.Cqrs.Commands;
 using Azure.Core;
 using System.Runtime.CompilerServices;
 using BankckApi.Dtos;
@@ -9,8 +9,8 @@ using BankckApi.Dtos;
 namespace BankckApi.Cqrs.Handlers.Account
 {
     public class AccountHandler
-        : IRequestHandler<CreateAccountCommand, AccountDto>,
-          IRequestHandler<UpdateAccount, AccountDto>,
+        : IRequestHandler<CreateAccountCommand, bool>,
+          IRequestHandler<UpdateAccountCommand, bool>,
           IRequestHandler<DeleteAccountCommand, bool>
 
     {
@@ -23,44 +23,28 @@ namespace BankckApi.Cqrs.Handlers.Account
         }
 
 
-        public async Task<AccountDto> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
-        {
-            var account = new Accout
-            {
-                Id = request.Id,
-                AccountNumber = request.AccountNumber,
-                Balance = request.balance,
-                IsLocked = false
 
-            };
-            await _interface.CreateAccout(account);
-            return account;
-        }
-
-        public Task<bool> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
 
-        public async Task<AccountDto> Handle(UpdateAccount request, CancellationToken cancellationToken)
-        {
-            var account = new AccountDto
-            {
-                Id = request.Id,
-                AccountNumber = request.AccoutNumber,
-                Balance = request.balance,
-            };
-             await _interface.UpdateAccout(account);
-            return account;
+            return await _interface.DeleteAccout(request.Account);
 
 
         }
 
 
 
+        public async Task<bool> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+        {
 
+            return await _interface.UpdateAccout(request.Account);
+        }
 
+        public async Task<bool> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
+        {
 
+            return await _interface.CreateAccout(request.Account);
+        }
     }
 
 

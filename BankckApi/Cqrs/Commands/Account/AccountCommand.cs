@@ -1,17 +1,15 @@
 ﻿using BankckApi.Dtos;
+using BankckApi.Interfaces;
 using BankckApi.Models;
 using MediatR;
 
-namespace BankckApi.Cqrs.Commands.Account
+namespace BankckApi.Cqrs.Commands
 {
-    public record CreateAccountCommand(int Id, string AccountNumber, Decimal balance, bool IsLocked) 
-        : IRequest<AccountDto>;
+    public record CreateAccountCommand(Account Account) : IRequest<bool>;
 
-    
-    public record UpdateAccount(int Id,string AccoutNumber,decimal balance,bool IsLocked) 
-        : IRequest<AccountDto>;
+    public record UpdateAccountCommand(Account Account) : IRequest<bool>;
 
-    public record DeleteAccountCommand(int Id) : IRequest<bool>;
+    public record DeleteAccountCommand(Account Account) : IRequest<bool>;
 
 
 

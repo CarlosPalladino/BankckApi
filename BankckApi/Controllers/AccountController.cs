@@ -3,6 +3,7 @@ using MediatR;
 using BankckApi.Interfaces;
 using BankckApi.Models;
 using Microsoft.Identity.Client;
+using BankckApi.Dtos;
 
 namespace BankckApi.Controllers
 {
@@ -73,7 +74,7 @@ namespace BankckApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
 
-        public async Task<IActionResult> CreateAccount([FromBody] Account accountCreate)
+        public async Task<IActionResult> CreateAccount([FromBody] AccountDto accountCreate)
         {
 
             if (!ModelState.IsValid)
