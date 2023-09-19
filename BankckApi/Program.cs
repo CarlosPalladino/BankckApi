@@ -1,8 +1,9 @@
 using BankckApi;
-using BankckApi.Cqrs.Commands.Account;
+using BankckApi.Cqrs.Commands;
 using BankckApi.Cqrs.Handlers;
 using BankckApi.Data;
 using BankckApi.Interfaces;
+using BankckApi.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,12 @@ internal class Program
 
         builder.Services.AddMediatR(typeof(Program).Assembly);
 
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        //builder.Services.AddScoped<CustomerInterface, CustomerInterface>();
+        builder.Services.AddScoped<AccoutInterface, AccoutRepository>();
+        //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();
+        //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();
+        //builder.Services.AddScoped<CurrencyInterface, CurrencyRepository>();
 
 
 

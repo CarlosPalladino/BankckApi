@@ -4,6 +4,7 @@ using BankckApi.Interfaces;
 using BankckApi.Models;
 using Microsoft.Identity.Client;
 using BankckApi.Dtos;
+using System.Collections.Generic;
 
 namespace BankckApi.Controllers
 {
@@ -25,15 +26,15 @@ namespace BankckApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
 
-        public async Task<IEnumerable> GetAccounts()
+        public async Task<IActionResult> GetAccounts()
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
 
             var acccounts = _interface.GetAccounts();
-            return _mediator.Send(acccounts);
-            //return (IActionResult)_mediator.Send(acccounts);
+            var result =  await _mediator.Send(acccounts);
+            return Ok(result);
         }
         [HttpGet("{accoutId}")]
         [ProducesResponseType(200)]
@@ -48,7 +49,8 @@ namespace BankckApi.Controllers
                 return BadRequest(ModelState);
 
             var account = _interface.GetAccount(Id);
-            return Ok(account);
+            var result = await _mediator.Send(account);
+            return Ok(result);
 
 
         }
@@ -65,7 +67,8 @@ namespace BankckApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var account = _interface.GetAccoutByCustomer(id);
-            return Ok(account);
+            var result  =  await _mediator.Send(account);
+            return Ok(result);
 
         }
 
@@ -74,7 +77,7 @@ namespace BankckApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
 
-        public async Task<IActionResult> CreateAccount([FromBody] AccountDto accountCreate)
+        public async Task<IActionResult> CreateAccount([FromBody] Account accountCreate)
         {
 
             if (!ModelState.IsValid)
@@ -90,8 +93,9 @@ namespace BankckApi.Controllers
                 ModelState.AddModelError("", "account alreeady exits");
                 return StatusCode(422, ModelState);
             }
-            var CreateAccount = await _interface.CreateAccout(accountCreate);
+            var CreateAccount =  _interface.CreateAccout(accountCreate);
 
+            var result =   _mediator.CreateStream(CreateAccount);
             return Ok("account created");
         }
         [HttpPut("{accountId}")]

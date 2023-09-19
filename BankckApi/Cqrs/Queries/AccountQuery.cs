@@ -8,7 +8,7 @@ namespace BankckApi.Cqrs.Queries
 
     public record GetById(int Id) : IRequest<AccountDto>;
 
-    public record GetAccountBycyustomer(int Id) : IRequest<List<Customer>>;
+    public record GetAccountBycyustomer(int Id) : IRequest<CustomerDto>;
 
 
 
