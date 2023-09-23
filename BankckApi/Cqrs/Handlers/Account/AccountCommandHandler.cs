@@ -5,6 +5,7 @@ using BankckApi.Cqrs.Commands;
 using Azure.Core;
 using System.Runtime.CompilerServices;
 using BankckApi.Dtos;
+using AutoMapper;
 
 namespace BankckApi.Cqrs.Handlers.Account
 {
@@ -16,13 +17,14 @@ namespace BankckApi.Cqrs.Handlers.Account
     {
 
         private readonly AccoutInterface _interface;
+        private readonly IMapper _mapper;
 
-        public AccountHandler(AccoutInterface @interface)
+
+        public AccountHandler(AccoutInterface @interface, IMapper mapper)
         {
             _interface = @interface;
+            _mapper = mapper;
         }
-
-
 
         public async Task<bool> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
         {
@@ -42,6 +44,7 @@ namespace BankckApi.Cqrs.Handlers.Account
 
         public async Task<bool> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
+            //var account = _mapper.Map<Account>(request.Account);
 
             return await _interface.CreateAccout(request.Account);
         }

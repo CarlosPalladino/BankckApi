@@ -1,6 +1,7 @@
 using BankckApi;
 using BankckApi.Cqrs.Commands;
 using BankckApi.Cqrs.Handlers;
+using BankckApi.Cqrs.Handlers.Account;
 using BankckApi.Data;
 using BankckApi.Interfaces;
 using BankckApi.Repository;
@@ -25,6 +26,10 @@ internal class Program
         //builder.Services.AddTransient<AccountCommand, AccountHandler>();
 
         builder.Services.AddMediatR(typeof(Program).Assembly);
+
+        builder.Services.AddMediatR(typeof(AccountHandler));
+        builder.Services.AddMediatR(typeof(AccountQueryHandler));
+
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //builder.Services.AddScoped<CustomerInterface, CustomerInterface>();

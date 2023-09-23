@@ -8,7 +8,7 @@
         public DateTime CreatedAt { get; set; }
         public bool IsLocked { get; set; }
 
-        public int CustomerId { get; set; }
+        public int  ?CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         public List<Transaction> Transactions { get; set; }

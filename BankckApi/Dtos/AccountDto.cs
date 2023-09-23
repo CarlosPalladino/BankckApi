@@ -8,7 +8,7 @@ namespace BankckApi.Dtos
         public string AccountNumber { get; set; }
         public decimal Balance { get; set; }
         public bool IsLocked { get; set; }
-        public int CustomerId { get; set; }
+        public int   ? CustomerId { get; set; }
 
 
 

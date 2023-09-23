@@ -5,6 +5,9 @@ using BankckApi.Models;
 using Microsoft.Identity.Client;
 using BankckApi.Dtos;
 using System.Collections.Generic;
+using BankckApi.Cqrs.Queries;
+using AutoMapper;
+using BankckApi.Cqrs.Commands;
 
 namespace BankckApi.Controllers
 {
@@ -14,12 +17,15 @@ namespace BankckApi.Controllers
 
     public class AccountController : Controller
     {
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+
         private readonly AccoutInterface _interface;
 
-        public AccountController(Mediator mediator, AccoutInterface @interface)
+        public AccountController(IMediator mediator, AccoutInterface @interface,IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
             _interface = @interface;
         }
         [HttpGet]
@@ -30,29 +36,28 @@ namespace BankckApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            //var acccounts = _interface.GetAccounts();
+             var account = new GetAll();
 
-
-            var acccounts = _interface.GetAccounts();
-            var result =  await _mediator.Send(acccounts);
+            var result =  await _mediator.Send(account);
             return Ok(result);
         }
         [HttpGet("{accoutId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetAccout(int Id)
+        public async Task<IActionResult> GetAccout(int accoutId)
         {
-            if (!await _interface.AccoutExits(Id))
+            if (!await _interface.AccoutExits(accoutId))
             {
                 return NotFound();
             }
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var account = _interface.GetAccount(Id);
+            //var account = _interface.GetAccount(Id);
+            var account = new GetById(accoutId);
             var result = await _mediator.Send(account);
             return Ok(result);
-
-
         }
         [HttpGet("Account/{customerId}")]
         [ProducesResponseType(200)]
@@ -74,10 +79,10 @@ namespace BankckApi.Controllers
 
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
 
-        public async Task<IActionResult> CreateAccount([FromBody] Account accountCreate)
+        public async Task<IActionResult> CreateAccount([FromBody] AccountDto accountCreate)
         {
 
             if (!ModelState.IsValid)
@@ -93,17 +98,24 @@ namespace BankckApi.Controllers
                 ModelState.AddModelError("", "account alreeady exits");
                 return StatusCode(422, ModelState);
             }
-            var CreateAccount =  _interface.CreateAccout(accountCreate);
 
-            var result =   _mediator.CreateStream(CreateAccount);
-            return Ok("account created");
+            var AccoutMap = _mapper.Map<Account>(accountCreate);
+            
+            var accountToCreate = new CreateAccountCommand(AccoutMap);
+            var result = await  _mediator.Send(accountToCreate);
+            //var CreateAccount =  _interface.CreateAccout(accountCreate);
+            if (result)
+                return Ok("account created");
+            else
+                return BadRequest("no se puede crear el account");
         }
+
         [HttpPut("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
 
-        public async Task<IActionResult> UpdateAccount(int accountId, [FromBody] Account UpdateAccount)
+        public async Task<IActionResult> UpdateAccount(int accountId, [FromBody] AccountDto UpdateAccount)
         {
             if (!await _interface.AccoutExits(accountId))
             {
@@ -121,10 +133,14 @@ namespace BankckApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+            //var account = new UpdateAccountCommand(UpdateAccount);
+            //var result = _mediator.Send(account);
 
             return Ok("Update Success");
 
         }
+
+
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(300)]
@@ -141,14 +157,14 @@ namespace BankckApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var accountToDelete = await _interface.GetAccount(accountId);
+            //var accountToDelete = await _interface.GetAccount(accountId);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!await _interface.DeleteAccout(accountToDelete))
+            //if (!await _interface.DeleteAccout(accountToDelete))
             {
                 ModelState.AddModelError("", "something happen went wrong deleting country");
             }
