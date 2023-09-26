@@ -5,22 +5,22 @@ namespace BankckApi.Interfaces
     public interface CustomerInterface
     {
 
-        ICollection<Customer> GetCustomers();
+        Task<ICollection<Customer>> GetCustomers();
 
-        Customer GetGustomer(int id);
+        Task<Customer> GetGustomer(int id);
 
-        bool Save(Customer customer);
+        Task<bool> Save(Customer customer);
 
-        ICollection<Account> GetAccoutByCustomer(int AccoutId);
+        Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId);
 
         bool CustomerExits(int id);
 
-        bool CreateCustomer(Customer customer);
+        Task<bool> CreateCustomer(Customer customer);
 
 
-        bool UpdateCustomer(Customer customer);
+        Task<bool> UpdateCustomer(Customer customer);
 
-        bool DeleteCustomer(Customer customer);
+        Task<bool> DeleteCustomer(Customer customer);
 
 
     }

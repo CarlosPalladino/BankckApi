@@ -36,7 +36,7 @@ namespace BankckApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var account = new GetAll();
+            var account = new GetAllAccounts();
 
             var result = await _mediator.Send(account);
             return Ok(result);
@@ -53,7 +53,7 @@ namespace BankckApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var account = new GetById(accoutId);
+            var account = new GetAccountById(accoutId);
             var result = await _mediator.Send(account);
             return Ok(result);
         }
@@ -169,7 +169,7 @@ namespace BankckApi.Controllers
             {
                 ModelState.AddModelError("", "something happen went wrong deleting country");
             }
-            var accountById = new GetById(accountId);
+            var accountById = new GetAccountById(accountId);
             if (accountById == null)
             {
                 return NotFound();

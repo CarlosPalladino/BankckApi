@@ -1,6 +1,7 @@
 ﻿using BankckApi.Data;
 using BankckApi.Interfaces;
 using BankckApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankckApi.Repository
 {
@@ -12,7 +13,7 @@ namespace BankckApi.Repository
         {
             context = _context;
         }
-        public bool CreateCustomer(Customer customer)
+        public Task<bool> CreateCustomer(Customer customer)
         {
             _context.Add(customer);
             return Save(customer);
@@ -23,30 +24,30 @@ namespace BankckApi.Repository
             return _context.Customer.Where(c => c.Id == id).Any();
         }
 
-        public bool DeleteCustomer(Customer customer)
+        public Task<bool> DeleteCustomer(Customer customer)
         {
             _context.Customer.Remove(customer);
             return Save(customer);
 
         }
 
-        public ICollection<Account> GetAccoutByCustomer(int AccoutId)
+        //public async Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId)
+        //{
+        //    return await _context.Customer.FindAsync
+        //}
+
+        public async Task<ICollection<Customer>> GetCustomers()
         {
-            throw new NotImplementedException();
+            return await _context.Customer.ToListAsync();
         }
 
-        public ICollection<Customer> GetCustomers()
+
+        public async Task<Customer> GetGustomer(int id)
         {
-            return _context.Customer.ToList();
+            return  await _context.Customer.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-
-        public Customer GetGustomer(int id)
-        {
-            return _context.Customer.Where(c => c.Id == id).FirstOrDefault();
-        }
-
-        public bool Save(Customer customer)
+        public  async Task<bool> Save(Customer customer)
         {
             var saved = _context.SaveChanges();
 
@@ -54,7 +55,7 @@ namespace BankckApi.Repository
 
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public Task<bool> UpdateCustomer(Customer customer)
         {
             _context.Update(customer);
             return Save(customer);

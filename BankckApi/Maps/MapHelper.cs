@@ -11,6 +11,9 @@ namespace BankckApi.Maps
             CreateMap<Account, AccountDto>();
             CreateMap<AccountDto, Account>();
 
+            CreateMap<Customer, CustomerDto>();
+            CreateMap<CustomerDto, Customer>();
+
 
 
 
