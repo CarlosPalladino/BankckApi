@@ -1,6 +1,7 @@
 ﻿using BankckApi.Data;
 using BankckApi.Interfaces;
 using BankckApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankckApi.Repository
 {
@@ -10,50 +11,50 @@ namespace BankckApi.Repository
         private readonly DataContext _Context;
         public CurrencyRepository(DataContext context)
         {
-            context = _Context;
+            _Context = context;
         }
 
-        public bool CreateCurrency(Currency currency)
+        public Task<bool> CreateCurrency(Currency currency)
         {
             _Context.Add(currency);
             return Save(currency);
 
         }
 
-        public bool CurrencyExits(int Id)
+        public async Task<bool> CurrencyExits(int Id)
         {
-            return _Context.Currency.Any(c => c.Id == Id);
+            return  await _Context.Currency.AnyAsync(c => c.Id == Id);
         }
 
-        public bool DeleteCurrency(Currency currency)
+        public Task<bool> DeleteCurrency(Currency currency)
         {
             _Context.Remove(currency);
             return Save(currency);
 
         }
 
-        public ICollection<Currency> GetCurrencies()
+        public async Task<ICollection<Currency>> GetCurrencies()
         {
-            return _Context.Currency.ToList();
+            return await _Context.Currency.ToListAsync();
         }
 
 
 
-        public Currency GetCurrency(int Id)
+        public async Task<Currency> GetCurrency(int Id)
         {
-            return _Context.Currency.Where(c => c.Id == Id).FirstOrDefault();
+            return await _Context.Currency.FirstOrDefaultAsync(c => c.Id == Id);
         }
 
-        public bool Save(Currency currency)
+        public async Task<bool> Save(Currency currency)
         {
             var saved = _Context.SaveChanges();
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateCurrency(Currency currency)
+        public async Task<bool> UpdateCurrency(Currency currency)
         {
             _Context.Update(currency);
-            return Save(currency);
+            return await Save(currency);
 
         }
     }

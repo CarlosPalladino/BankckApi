@@ -2,6 +2,7 @@ using BankckApi;
 using BankckApi.Cqrs.Commands;
 using BankckApi.Cqrs.Handlers;
 using BankckApi.Cqrs.Handlers.Account;
+using BankckApi.Cqrs.Handlers.Currency;
 using BankckApi.Cqrs.Handlers.Customer;
 using BankckApi.Data;
 using BankckApi.Interfaces;
@@ -35,15 +36,17 @@ internal class Program
         builder.Services.AddMediatR(typeof(CustomerCommandHandler));
         builder.Services.AddMediatR(typeof(CustomerQueryHandler));
 
-
+        builder.Services.AddMediatR(typeof(CurrencyCommandHandler));
+        builder.Services.AddMediatR(typeof(CustomerQueryHandler));
 
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<CustomerInterface,CustomerRepository>();
         builder.Services.AddScoped<AccoutInterface, AccoutRepository>();
+        builder.Services.AddScoped<CurrencyInterface, CurrencyRepository>();
+
         //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();
         //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();
-        //builder.Services.AddScoped<CurrencyInterface, CurrencyRepository>();
 
 
 

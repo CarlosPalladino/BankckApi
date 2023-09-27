@@ -5,20 +5,20 @@ namespace BankckApi.Interfaces
     public interface CurrencyInterface
     {
 
-        ICollection<Currency> GetCurrencies();
+        Task<ICollection<Currency>> GetCurrencies();
 
 
-        Currency GetCurrency(int Id);
+        Task<Currency> GetCurrency(int Id);
 
 
-        bool CurrencyExits(int Id);
+        Task<bool> CurrencyExits(int Id);
 
-        bool Save(Currency currency);
+        Task<bool> Save(Currency currency);
 
-        bool CreateCurrency(Currency currency);
+        Task<bool> CreateCurrency(Currency currency);
 
-        bool UpdateCurrency(Currency currency);
-        bool DeleteCurrency(Currency currency);
+        Task<bool> UpdateCurrency(Currency Currency);
+        Task<bool> DeleteCurrency(Currency Currency);
 
 
     }

@@ -14,9 +14,8 @@ namespace BankckApi.Maps
             CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerDto, Customer>();
 
-
-
-
+            CreateMap<Currency, CurrencyDto>();
+            CreateMap<CurrencyDto, Currency>();
 
 
 
