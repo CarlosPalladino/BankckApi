@@ -14,7 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 internal class Program
 {
     private static void Main(string[] args)
-     {
+     
+    {
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
@@ -38,7 +39,7 @@ internal class Program
 
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        //builder.Services.AddScoped<CustomerInterface, CustomerInterface>();
+        builder.Services.AddScoped<CustomerInterface,CustomerRepository>();
         builder.Services.AddScoped<AccoutInterface, AccoutRepository>();
         //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();
         //builder.Services.AddScoped<ExChangeRateInterface, ExchanRateRepository>();

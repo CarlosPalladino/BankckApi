@@ -11,7 +11,7 @@ namespace BankckApi.Interfaces
 
         Task<bool> Save(Customer customer);
 
-        Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId);
+        //Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId);
 
         bool CustomerExits(int id);
 

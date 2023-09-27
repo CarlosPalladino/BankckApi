@@ -38,22 +38,22 @@ namespace BankckApi.Controllers
             var customer = new GetAllCustomer();
 
             var result = await _mediator.Send(customer);
-            return Ok();
+            return Ok(result);
         }
 
-        [HttpGet("Customers/{CustomerId}")]
+        [HttpGet("{CustomerId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
 
-        public async Task<IActionResult> GetCustomer(int customerId)
+        public async Task<IActionResult> GetCustomer(int CustomerId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var account = new GetCustomerById(customerId);
-            var result = await _mediator.Send(account);
+            var Customer = new GetCustomerById(CustomerId);
+            var result = await _mediator.Send(Customer);
 
-            return Ok();
+            return Ok(result);
 
         }
 
@@ -86,13 +86,13 @@ namespace BankckApi.Controllers
         [ProducesResponseType(400)]
 
 
-        public async Task<IActionResult> UpdateCustomer(int CustomerId)
+        public async Task<IActionResult> UpdateCustomer(int customerId,[FromBody] CustomerDto UpdateCustomer)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
 
-            var CustomerMao = _mapper.Map<Customer>(CustomerId);
+            var CustomerMao = _mapper.Map<Customer>(UpdateCustomer);
 
             var Customer = new UpdateCustomerCommand(CustomerMao);
 

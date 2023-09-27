@@ -11,7 +11,7 @@ namespace BankckApi.Repository
 
         public CustomerRepository(DataContext context)
         {
-            context = _context;
+            _context = context;
         }
         public Task<bool> CreateCustomer(Customer customer)
         {
@@ -33,7 +33,7 @@ namespace BankckApi.Repository
 
         //public async Task<ICollection<Account>> GetAccoutByCustomer(int CustomerId)
         //{
-        //    return await _context.Customer.FindAsync
+        //    return await _context.Customer.FindAsync();
         //}
 
         public async Task<ICollection<Customer>> GetCustomers()

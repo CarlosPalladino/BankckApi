@@ -38,19 +38,5 @@ namespace BankckApi.Cqrs.Handlers.Customer
         }
 
 
-        //public async Task<bool> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
-        //{
-        //    
-        //}
-
-        //public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
-        //{
-        //   
-        //}
-
-        //public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
-        //{
-        //  
-        //}
     }
 }
