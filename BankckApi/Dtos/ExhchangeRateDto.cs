@@ -1,6 +1,6 @@
 ﻿namespace BankckApi.Dtos
 {
-    public class ExhchangeRateDto
+    public class ExchangeRateDto
     {
         public int Id { get; set; }
         public int SourceCurrencyId { get; set; }

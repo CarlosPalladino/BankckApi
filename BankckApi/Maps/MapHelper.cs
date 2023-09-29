@@ -17,7 +17,8 @@ namespace BankckApi.Maps
             CreateMap<Currency, CurrencyDto>();
             CreateMap<CurrencyDto, Currency>();
 
-
+            CreateMap<ExchangeRate, ExchangeRateDto>();
+            CreateMap<ExchangeRateDto, ExchangeRate>();
 
 
 

@@ -4,19 +4,19 @@ namespace BankckApi.Interfaces
 {
     public interface ExChangeRateInterface
     {
-        ICollection<ExchangeRate> GetExchangeRates();
+        Task<ICollection<ExchangeRate>> GetExchangeRates();
 
-        ExchangeRate GetExchangeRate(int id);
+        Task<ExchangeRate> GetExchangeRate(int id);
 
-        bool ExchangeExists(int id);
+        Task<bool> ExchangeExists(int id);
 
-        bool Save(ExchangeRate exchangeRate);
+        Task<bool> Save(ExchangeRate exchangeRate);
 
-        bool CreateExchangeRate(ExchangeRate exchangeRate);
+        Task<bool> CreateExchangeRate(ExchangeRate exchangeRate);
 
-        bool UpdateExchangeRate(ExchangeRate exchangeRate);
+        Task<bool> UpdateExchangeRate(ExchangeRate exchangeRate);
 
-        bool DeleteExchangeRate(ExchangeRate exchangeRate);
+        Task<bool> DeleteExchangeRate(ExchangeRate exchangeRate);
 
 
 

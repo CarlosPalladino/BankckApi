@@ -7,8 +7,8 @@ namespace BankckApi.Cqrs.Queries
     public class ExchangerRateQuery
     {
 
-        public record GetAll  : IRequest<IEnumerable<ExhchangeRateDto>>;
-        public record GetById(int id) : IRequest<ExhchangeRateDto>;
+        public record ExchangeGetAll  : IRequest<IEnumerable<ExchangeRateDto>>;
+        public record ExchangeGetById(int Id) : IRequest<ExchangeRateDto>;
 
     }
 }

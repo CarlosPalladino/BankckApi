@@ -13,12 +13,10 @@ namespace BankckApi.Cqrs.Handlers.Customer
 
 
     {
-        private readonly IMapper _mapper;
         private readonly CustomerInterface _interface;
 
-        public CustomerCommandHandler(CustomerInterface @interface, IMapper mapper)
+        public CustomerCommandHandler(CustomerInterface @interface)
         {
-            _mapper = mapper;
             _interface = @interface;
         }
 

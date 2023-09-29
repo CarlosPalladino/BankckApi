@@ -1,6 +1,7 @@
 ﻿using BankckApi.Data;
 using BankckApi.Interfaces;
 using BankckApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankckApi.Repository
 {
@@ -14,13 +15,13 @@ namespace BankckApi.Repository
 
         }
 
-        public bool CreateExchangeRate(ExchangeRate exchangeRate)
+        public Task<bool> CreateExchangeRate(ExchangeRate exchangeRate)
         {
             _dataContext.Add(exchangeRate);
-            return Save(exchangeRate);
+            return  Save(exchangeRate);
         }
 
-        public bool DeleteExchangeRate(ExchangeRate exchangeRate)
+        public Task<bool> DeleteExchangeRate(ExchangeRate exchangeRate)
         {
 
             _dataContext.Remove(exchangeRate);
@@ -28,37 +29,37 @@ namespace BankckApi.Repository
 
         }
 
-        public bool ExchangeExists(int id)
+        public  async Task<bool> ExchangeExists(int id)
         {
 
-            return _dataContext.ExchangeRate.Any(e => e.Id == id);
+            return await  _dataContext.ExchangeRate.AnyAsync(e => e.Id == id);
 
         }
 
-        public ExchangeRate GetExchangeRate(int id)
+        public async Task<ExchangeRate> GetExchangeRate(int id)
         {
 
-            return _dataContext.ExchangeRate.Where(e => e.Id == id).FirstOrDefault();
+            return await _dataContext.ExchangeRate.FirstOrDefaultAsync(e => e.Id == id);
 
         }
 
-        public ICollection<ExchangeRate> GetExchangeRates()
+        public async Task<ICollection<ExchangeRate>> GetExchangeRates()
         {
-            return _dataContext.ExchangeRate.ToList();
+            return await _dataContext.ExchangeRate.ToListAsync();
         }
 
-        public bool Save(ExchangeRate exchangeRate)
+        public async Task<bool> Save(ExchangeRate exchangeRate)
         {
             var saved = _dataContext.SaveChanges();
 
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateExchangeRate(ExchangeRate exchangeRate)
+        public async Task<bool> UpdateExchangeRate(ExchangeRate exchangeRate)
         {
 
             _dataContext.Update(exchangeRate);
-            return Save(exchangeRate);
+            return await Save(exchangeRate);
 
         }
     }
