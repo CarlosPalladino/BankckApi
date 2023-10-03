@@ -86,7 +86,7 @@ namespace BankckApi.Controllers
         [ProducesResponseType(400)]
 
 
-        public async Task<IActionResult> UpdateCustomer(int customerId,[FromBody] CustomerDto UpdateCustomer)
+        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerDto UpdateCustomer)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

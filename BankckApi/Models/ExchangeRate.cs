@@ -6,7 +6,6 @@
         public int SourceCurrencyId { get; set; }
         public int TargetCurrencyId { get; set; }
         public decimal Rate { get; set; }
-
         public Currency SourceCurrency { get; set; }
         public Currency TargetCurrency { get; set; }
     }
